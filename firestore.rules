@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Catch-All Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Security Helper Functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Health / Connection Test Document
+    match /test/{testId} {
+      allow read: if true;
+    }
+
+    // User Profile Document
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // PII Protection: do not allow list enumeration of user accounts
+      allow create: if isOwner(userId) && isValidId(userId) && incoming().userId == userId;
+      allow update: if isOwner(userId) && isValidId(userId) && incoming().userId == existing().userId;
+      allow delete: if isOwner(userId);
+
+      // User Settings Subcollection
+      match /settings/{settingId} {
+        allow get, list: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidId(settingId);
+        allow delete: if isOwner(userId);
+      }
+
+      // User Lesson History Subcollection
+      match /lessons/{lessonId} {
+        allow get, list: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidId(lessonId) && incoming().userId == userId;
+        allow delete: if isOwner(userId);
+      }
+
+      // User Learning Diagnostic Reports Subcollection
+      match /reports/{reportId} {
+        allow get, list: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidId(reportId) && incoming().userId == userId;
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}

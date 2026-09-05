@@ -1,0 +1,10 @@
+{
+  "name": "Remix Remix  3rd AI TEACHER — Adaptive Human-Like AI Educator",
+  "description": "Adaptive human-like AI educator that understands, profiles, plans, explains, questions, evaluates, detects misconceptions, and dynamically adapts lessons with subject-aware visuals.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

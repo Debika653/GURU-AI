@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "User educational profile, baseline knowledge, and learning style",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Unique identifier of the user" },
+        "name": { "type": "string", "description": "Student or learner name" },
+        "email": { "type": "string", "description": "Student email address" },
+        "educationalLevel": { "type": "string", "description": "Level (Beginner, Intermediate, Advanced)" },
+        "existingKnowledge": { "type": "string", "description": "Summary of prior knowledge" },
+        "learningObjective": { "type": "string", "description": "Core educational goal" },
+        "preferredLanguage": { "type": "string", "description": "Preferred teaching language" },
+        "preferredTeachingStyle": { "type": "string", "description": "Socratic, Example-driven, First principles, etc." },
+        "availableTime": { "type": "string", "description": "Time per lesson session" },
+        "desiredDepth": { "type": "string", "description": "Quick overview, Standard, or Rigorous mastery" },
+        "naturalLanguageInstruction": { "type": "string", "description": "Custom student prompt or guidance for teacher" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["userId", "name"]
+    },
+    "userSettings": {
+      "title": "UserSettings",
+      "description": "Application preferences for voice, pacing, and visual display",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User ID" },
+        "autoPlayVoice": { "type": "boolean", "description": "Automatically play AI voice output" },
+        "teachingVoice": { "type": "string", "description": "Voice profile name" },
+        "speechSpeed": { "type": "number", "description": "Speech playback speed multiplier" },
+        "themeMode": { "type": "string", "description": "Light, warm paper, or dark theme" },
+        "adaptivePacing": { "type": "boolean", "description": "Dynamically adjust speed based on comprehension" },
+        "showConfidenceRadar": { "type": "boolean", "description": "Show pedagogical telemetry and radar" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["userId"]
+    },
+    "lessonRecord": {
+      "title": "LessonRecord",
+      "description": "Progress and score history for completed and ongoing lessons",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Lesson ID" },
+        "userId": { "type": "string", "description": "User ID of the student" },
+        "topic": { "type": "string", "description": "Topic or title of the lesson" },
+        "completedSections": { "type": "number", "description": "Number of sections completed" },
+        "totalSections": { "type": "number", "description": "Total sections in the plan" },
+        "status": { "type": "string", "enum": ["in_progress", "completed"], "description": "Current status" },
+        "score": { "type": "number", "description": "Assessment score percentage if tested" },
+        "createdAt": { "type": "string", "description": "Timestamp when started" },
+        "updatedAt": { "type": "string", "description": "Timestamp of last activity" }
+      },
+      "required": ["id", "userId", "topic", "status"]
+    },
+    "learningReport": {
+      "title": "LearningReport",
+      "description": "Diagnostic evaluation report following an end-of-lesson assessment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Report ID" },
+        "userId": { "type": "string", "description": "Student user ID" },
+        "topic": { "type": "string", "description": "Topic assessed" },
+        "overallScore": { "type": "number", "description": "Overall score percentage" },
+        "letterGrade": { "type": "string", "description": "Diagnostic grade (e.g. A, B, C)" },
+        "masteryStatus": { "type": "string", "description": "Mastery classification" },
+        "createdAt": { "type": "string", "description": "Generation timestamp" }
+      },
+      "required": ["id", "userId", "topic", "overallScore", "masteryStatus"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "User profile with personalized learning settings and calibration"
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": "userSettings",
+      "description": "Voice, audio, and UI preference settings for the user"
+    },
+    "/users/{userId}/lessons/{lessonId}": {
+      "schema": "lessonRecord",
+      "description": "History of lessons studied, progress, and scores"
+    },
+    "/users/{userId}/reports/{reportId}": {
+      "schema": "learningReport",
+      "description": "Diagnostic mastery reports from completed assessments"
+    }
+  }
+}

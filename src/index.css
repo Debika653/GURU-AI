@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Lora", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root,
+[data-theme="dark"] {
+  --background: #080B12;
+  --surface: #10151F;
+  --surface-elevated: #151C28;
+  --surface-hover: #192233;
+  --surface-board: #0B0F19;
+  --primary: #6C8CFF;
+  --primary-hover: #5A7AE6;
+  --primary-subtle: rgba(108, 140, 255, 0.12);
+  --secondary: #8B7CFF;
+  --success: #3DDC97;
+  --success-subtle: rgba(61, 220, 151, 0.12);
+  --warning: #F5B942;
+  --warning-subtle: rgba(245, 185, 66, 0.12);
+  --danger: #FF6B6B;
+  --danger-subtle: rgba(255, 107, 107, 0.12);
+  --text-primary: #F4F7FB;
+  --text-secondary: #9BA7B8;
+  --text-muted: #5E6D82;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --shadow-panel: 0 8px 24px -6px rgba(0, 0, 0, 0.45);
+  --ambient-glow: rgba(108, 140, 255, 0.15);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --background: #F5F7FA;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-hover: #F1F4F9;
+  --surface-board: #FAFCFE;
+  --primary: #536DFF;
+  --primary-hover: #4057DB;
+  --primary-subtle: rgba(83, 109, 255, 0.08);
+  --secondary: #7357D9;
+  --success: #10B981;
+  --success-subtle: rgba(16, 185, 129, 0.1);
+  --warning: #F59E0B;
+  --warning-subtle: rgba(245, 158, 11, 0.1);
+  --danger: #EF4444;
+  --danger-subtle: rgba(239, 68, 68, 0.1);
+  --text-primary: #172033;
+  --text-secondary: #667085;
+  --text-muted: #94A3B8;
+  --border: #E5E7EB;
+  --border-strong: #D1D5DB;
+  --shadow-panel: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --ambient-glow: rgba(83, 109, 255, 0.12);
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
